@@ -17,6 +17,16 @@ struct ContentView: View {
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0..<3)
     
+    struct FlagImage: View {
+        var flagName: String
+        
+        var body: some View {
+            Image(flagName)
+                .clipShape(.rect(cornerRadius: 20))
+                .shadow(radius: 5)
+        }
+    }
+    
     var body: some View {
         ZStack {
             RadialGradient(stops: [
@@ -41,9 +51,7 @@ struct ContentView: View {
                         Button {
                             flagTapped(number)
                         } label: {
-                            Image(countries[number])
-                                .clipShape(.rect(cornerRadius: 20))
-                                .shadow(radius: 5)
+                            FlagImage(flagName: countries[number])
                         }
                     }
                 }
