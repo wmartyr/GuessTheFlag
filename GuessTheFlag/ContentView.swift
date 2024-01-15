@@ -13,6 +13,9 @@ struct ContentView: View {
     @State private var scoreTitle = ""
     @State private var userScore = 0
     @State private var questionNumber = 0
+    @State private var chosenFlag = false
+    
+    @State private var animationAmount = 0.0
     
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0..<3)
@@ -50,8 +53,15 @@ struct ContentView: View {
                     ForEach(0..<3) { number in
                         Button {
                             flagTapped(number)
+                            chosenFlag.toggle()
                         } label: {
                             FlagImage(flagName: countries[number])
+                                .rotation3DEffect(
+                                    .degrees(chosenFlag ? 360 : 0), axis: (x: 0.0, y: 1.0, z: 0.0)
+                                )
+                                //.animation(/*@START_MENU_TOKEN@*/.easeIn/*@END_MENU_TOKEN@*/, value: chosenFlag)
+                                //.opacity(chosenFlag ? 0.25 : 1)
+                                //.animation(/*@START_MENU_TOKEN@*/.easeIn/*@END_MENU_TOKEN@*/, value: chosenFlag)
                         }
                     }
                 }
@@ -87,18 +97,19 @@ struct ContentView: View {
         } else {
             scoreTitle = "Wrong, that's the flag of \(countries[number])"
         }
-//        showingScore = true
         questionNumber += 1
         if questionNumber  < 5 {
             showingScore = true
         } else {
             endOfGame = true
         }
+//        chosenFlag = false
     }
     
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0..<3)
+        chosenFlag = false
     }
     
     func restartGame() {
