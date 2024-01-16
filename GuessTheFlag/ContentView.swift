@@ -62,7 +62,11 @@ struct ContentView: View {
                                 .rotation3DEffect(
                                     .degrees(chosenNumber == number ? 360 : 0), axis: (x: 0.0, y: 1.0, z: 0.0)
                                 )
+                                .rotation3DEffect(
+                                    .degrees(chosenNumber == number ? 0 : (chosenNumber == 3 ? 0 : 360)), axis: (x: 1.0, y: 0.0, z: 0.0)
+                                )
                                 .opacity(chosenNumber == number ? 1 : (chosenNumber == 3 ? 1 : 0.25))
+                                .scaleEffect(chosenNumber == number ? 1 : (chosenNumber == 3 ? 1 : 0.5))
                         }
                     }
                 }
@@ -93,7 +97,6 @@ struct ContentView: View {
     
     func flagTapped(_ number: Int) {
         chosenNumber = number
-        print("chosenNumber: \(chosenNumber)")
         if number == correctAnswer {
             scoreTitle = "Correct"
             userScore += 1
